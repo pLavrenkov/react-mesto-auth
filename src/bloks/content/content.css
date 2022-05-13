@@ -1,0 +1,23 @@
+.content {
+  width: calc(100% - (200px * 2));
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 1279px) {
+  .content {
+    width: calc(100% - 2 * 90px);
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .content {
+    width: calc(100% - 2 * 40px);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .content {
+    width: calc(100% - 2 * 19px);
+  }
+}

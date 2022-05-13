@@ -1,0 +1,6 @@
+.element__like_active {
+  background-image: url(../../../../images/Vector-filled.svg);
+  transition: .5s ease-out;
+  opacity: 100%;
+  background-repeat: no-repeat;
+}

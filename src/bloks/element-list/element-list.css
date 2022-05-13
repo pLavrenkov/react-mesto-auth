@@ -1,0 +1,24 @@
+.element-list {
+  display: grid;
+  grid-template-columns: repeat(3, 282px);
+  grid-template-rows: repeat(1, 361px);
+  grid-auto-flow: row;
+  grid-gap: 20px 17px;
+  justify-items: center;
+  margin: 0;
+  list-style: none;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 1279px) {
+  .element-list {
+    grid-template-columns: repeat(2, 282px);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .element-list {
+    grid-template-columns: 282px;
+  }
+}

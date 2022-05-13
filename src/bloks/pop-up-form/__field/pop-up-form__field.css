@@ -1,0 +1,17 @@
+.pop-up-form__field {
+  border: none;
+  border-bottom: 1px solid rgb(0, 0, 0, .2);
+  font-size: 14px;
+  line-height: 1;
+  vertical-align: top;
+  color: #000;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.pop-up-form__field:last-of-type {
+  margin-bottom: 0;
+}

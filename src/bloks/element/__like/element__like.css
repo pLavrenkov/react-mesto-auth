@@ -1,0 +1,25 @@
+.element__like {
+  background-image: url(../../../images/Vector.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 22px 19px;
+  width: 22px;
+  height: 19px;
+  transition: .5s ease-out;
+  cursor: pointer;
+  border: none;
+  color: #fff;
+  background-color: rgba(255, 255, 255, 0);
+  box-sizing: border-box;
+  flex-shrink: 0;
+}
+
+.element__like:hover {
+  opacity: 50%;
+  transition: .5s ease-out;
+}
+
+.element__like:active {
+  transform: scale(1.5, 1.5);
+  background-image: url(../../../images/Vector-filled.svg);
+}

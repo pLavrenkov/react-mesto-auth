@@ -1,0 +1,18 @@
+.pop-up-picture__caption {
+  color: #fff;
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  line-height: 15px;
+  padding-top: 10px;
+  padding-bottom: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 575px;
+}
+
+@media screen and (max-width: 767px) {
+  .pop-up-picture__caption {
+    max-width: 240px;
+  }
+}
