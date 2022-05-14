@@ -26,7 +26,7 @@ function AddPlacePopup({ isOpen, onClose, newCardAdd, onCloseByLayout }) {
 
     function handleSubmit(event) {
         event.preventDefault();
-        newCardAdd(name, link);
+        newCardAdd(name, link); 
         onClosePopupAddPlace();
     }
 
@@ -36,7 +36,7 @@ function AddPlacePopup({ isOpen, onClose, newCardAdd, onCloseByLayout }) {
         (!isNameValid || !isLinkValid ? setIsButtonBlocked(true) : setIsButtonBlocked(false));
     }, [name, link, isNameValid, isLinkValid]);
 
-    const classNameList = (isNameValid ? classListValidationInput.valid : classListValidationInput.error);
+    const classNameList = (isNameValid ? classListValidationInput.valid : classListValidationInput.error); 
     const classLinkList = (isLinkValid ? classListValidationInput.valid : classListValidationInput.error);
 
     return (

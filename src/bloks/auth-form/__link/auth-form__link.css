@@ -1,0 +1,12 @@
+.auth-form__link {
+    margin-left: 5px;
+    text-decoration: none;
+    color: white;
+    opacity: 60%;
+    transition: .3s, ease-out;
+}
+
+.auth-form__link:hover {
+    opacity: 100%;
+    transition: .3s, ease-out;
+}

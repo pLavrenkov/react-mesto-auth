@@ -10,6 +10,8 @@
 /* секция header */
 @import url(./bloks/header/header.css);
 @import url(./bloks/header/__logo/header__logo.css);
+@import url(./bloks/header/__nav/header__nav.css);
+@import url(./bloks/header/__link/header__link.css);
 
 /* секция profile */
 @import url(./bloks/profile/profile.css);
@@ -65,3 +67,11 @@
 @import url(./bloks/pop-up-picture/pop-up-picture.css);
 @import url(./bloks/pop-up-picture/__photo/pop-up-picture__photo.css);
 @import url(./bloks/pop-up-picture/__caption//pop-up-picture__caption.css);
+
+/* секция sigh-in */
+@import url(./bloks/auth-form/auth-form.css);
+@import url(./bloks/auth-form/__button/auth-form__button.css);
+@import url(./bloks/auth-form/__input/auth-form__input.css);
+@import url(./bloks/auth-form/__title/auth-form__title.css);
+@import url(./bloks/auth-form/__subtitle/auth-form__subtitle.css);
+@import url(./bloks/auth-form/__link/auth-form__link.css);

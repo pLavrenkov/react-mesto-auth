@@ -1,15 +1,21 @@
 import React from 'react';
+import { useState, useEffect } from "react";
+import { CurrentUserContext, defaultUser } from '../contexts/CurrentUserContext';
+import { BrowserRouter, Route, Redirect, Switch, useHistory, Link } from 'react-router-dom';
+
 import Header from "./Header";
 import Main from "./Main";
+import Login from './Login';
+import Register from "./Register"
 import Footer from "./Footer";
-import { CurrentUserContext, defaultUser } from '../contexts/CurrentUserContext';
+import ProtectedRoute from './ProtectedRoute';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import { api } from '../utils/Api';
-import { useState, useEffect } from "react";
+
 
 function App() {
   const [currentUser, setCurrentUser] = useState(defaultUser);
@@ -19,6 +25,8 @@ function App() {
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
+  const [click, setClick] = useState(false);
+  const pageObj = useHistory();
 
   useEffect(() => {
     api.getUserInfo()
@@ -54,6 +62,10 @@ function App() {
     }
     setSelectedCard(card);
     setIsImagePopupOpen(true);
+  }
+
+  const handleLinkClick = () => {
+    setClick(!click);
   }
 
   function handleUpdateUser(name, about) {
@@ -159,18 +171,30 @@ function App() {
     <div className="body">
       <div className="mainpage">
         <CurrentUserContext.Provider value={currentUser}>
-          <Header />
-          <Main
-            onEditProfile={handleEditProfileClick}
-            onUpdateUser={handleUpdateUser}
-            onUpdateAvatar={handleUpdateAvatar}
-            onAddPlace={handleAddPlaceClick}
-            onEditAvatar={handleEditAvatarClick}
-            onCardClick={handleCardClick}
-            cards={cards}
-            onCardLike={handleCardLike}
-            onCardDelete={handleDeleteCardClick}
-          />
+          <Header onClick={handleLinkClick} click={click}/>
+
+          <Switch>
+            <Route exact path={'/'}>
+              <Main
+                onEditProfile={handleEditProfileClick}
+                onUpdateUser={handleUpdateUser}
+                onUpdateAvatar={handleUpdateAvatar}
+                onAddPlace={handleAddPlaceClick}
+                onEditAvatar={handleEditAvatarClick}
+                onCardClick={handleCardClick}
+                cards={cards}
+                onCardLike={handleCardLike}
+                onCardDelete={handleDeleteCardClick}
+              />
+            </Route>
+            <Route path={'/sign-up'}>
+              <Register onClick={handleLinkClick}/>
+            </Route>
+            <Route path={'/sign-in'}>
+              <Login />
+            </Route>
+            <Route path={'*'}></Route>
+          </Switch>
           <Footer />
           <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} onCloseByLayout={closeAllPopupsByLayout} />
           <EditAvatarPopup isOpen={isEditAvatarPopupOpen} onClose={closeAllPopups} onUpdateAvatar={handleUpdateAvatar} onCloseByLayout={closeAllPopupsByLayout} />
@@ -178,6 +202,7 @@ function App() {
           <PopupWithForm name={"deletecard"} title={"Вы уверены?"} button={"Да"} isOpen={isDeleteCardPopupOpen} onClose={closeAllPopups} onCloseByLayout={closeAllPopupsByLayout} onSubmit={handleCardDelete} />
           <ImagePopup onClose={closeAllPopups} cardAttributes={selectedCard} isOpen={isImagePopupOpen} onCloseByLayout={closeAllPopupsByLayout} />
         </CurrentUserContext.Provider>
+
       </div>
     </div>
   );
