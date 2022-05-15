@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from "react";
 import { CurrentUserContext, defaultUser } from '../contexts/CurrentUserContext';
-import { BrowserRouter, Route, Redirect, Switch, useHistory, Link } from 'react-router-dom';
+import { Route, Redirect, Switch, useHistory, Link } from 'react-router-dom';
 
 import Header from "./Header";
 import Main from "./Main";
@@ -14,6 +14,7 @@ import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
 import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
+import InfoTooltip from './InfoTooltip';
 import { api } from '../utils/Api';
 
 
@@ -24,8 +25,10 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = useState(false);
+  const [isInfoTooltipOpen, setIsInfoTooltopOpen] = useState(true);
   const [selectedCard, setSelectedCard] = useState({});
   const [click, setClick] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(true);
   const pageObj = useHistory();
 
   useEffect(() => {
@@ -53,6 +56,10 @@ function App() {
   function handleDeleteCardClick(item) {
     setIsDeleteCardPopupOpen(true);
     setSelectedCard(item);
+  }
+
+  function handleInfoTooltipOpen() {
+    setIsInfoTooltopOpen(true);
   }
 
   function handleCardClick(name, link) {
@@ -144,6 +151,7 @@ function App() {
     setIsEditProfilePopupOpen(false);
     setIsImagePopupOpen(false);
     setIsDeleteCardPopupOpen(false);
+    setIsInfoTooltopOpen(false);
     setSelectedCard({});
   }
 
@@ -171,29 +179,31 @@ function App() {
     <div className="body">
       <div className="mainpage">
         <CurrentUserContext.Provider value={currentUser}>
-          <Header onClick={handleLinkClick} click={click}/>
-
+          <Header onClick={handleLinkClick} click={click} />
           <Switch>
-            <Route exact path={'/'}>
-              <Main
-                onEditProfile={handleEditProfileClick}
-                onUpdateUser={handleUpdateUser}
-                onUpdateAvatar={handleUpdateAvatar}
-                onAddPlace={handleAddPlaceClick}
-                onEditAvatar={handleEditAvatarClick}
-                onCardClick={handleCardClick}
-                cards={cards}
-                onCardLike={handleCardLike}
-                onCardDelete={handleDeleteCardClick}
-              />
-            </Route>
+            <ProtectedRoute
+              exact path={'/'}
+              loggedIn={loggedIn}
+              component={Main}
+              onEditProfile={handleEditProfileClick}
+              onUpdateUser={handleUpdateUser}
+              onUpdateAvatar={handleUpdateAvatar}
+              onAddPlace={handleAddPlaceClick}
+              onEditAvatar={handleEditAvatarClick}
+              onCardClick={handleCardClick}
+              cards={cards}
+              onCardLike={handleCardLike}
+              onCardDelete={handleDeleteCardClick}
+            />
             <Route path={'/sign-up'}>
-              <Register onClick={handleLinkClick}/>
+              <Register onClick={handleLinkClick} />
             </Route>
             <Route path={'/sign-in'}>
               <Login />
             </Route>
-            <Route path={'*'}></Route>
+            <Route path={'*'}>
+              {loggedIn ? <Redirect to={'/'} /> : <Redirect to={'/sign-in'} />}
+            </Route>
           </Switch>
           <Footer />
           <EditProfilePopup isOpen={isEditProfilePopupOpen} onClose={closeAllPopups} onUpdateUser={handleUpdateUser} onCloseByLayout={closeAllPopupsByLayout} />
@@ -201,10 +211,11 @@ function App() {
           <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} newCardAdd={handleAddPlaceSubmit} onCloseByLayout={closeAllPopupsByLayout} />
           <PopupWithForm name={"deletecard"} title={"Вы уверены?"} button={"Да"} isOpen={isDeleteCardPopupOpen} onClose={closeAllPopups} onCloseByLayout={closeAllPopupsByLayout} onSubmit={handleCardDelete} />
           <ImagePopup onClose={closeAllPopups} cardAttributes={selectedCard} isOpen={isImagePopupOpen} onCloseByLayout={closeAllPopupsByLayout} />
+          <InfoTooltip isOpen={isInfoTooltipOpen} loggedIn={loggedIn} onClose={closeAllPopups} onCloseByLayout={closeAllPopupsByLayout} />
         </CurrentUserContext.Provider>
 
       </div>
-    </div>
+    </div >
   );
 }
 

@@ -54,7 +54,12 @@
 @import url(./bloks/pop-up-form/pop-up-form.css);
 @import url(./bloks/pop-up-form/_deletecard/pop-up-form_deletecard.css);
 @import url(./bloks/pop-up-form/_avatar-edit/pop-up-form_avatar-edit.css);
+@import url(./bloks/pop-up-form/_info-tooltip/pop-up-form_info-tooltip.css);
 @import url(./bloks/pop-up-form/__title/pop-up-form__title.css);
+@import url(./bloks/pop-up-form/__subtitle/pop-up-form__subtitle.css);
+@import url(./bloks/pop-up-form/__image/pop-up-form__image.css);
+@import url(./bloks/pop-up-form/__image/_type_logedin/pop-up-form__image_type_logedin.css);
+@import url(./bloks/pop-up-form/__image/_type_rejected/pop-up-form__image_type_rejected.css);
 @import url(./bloks/pop-up-form/__title/_delete/pop-up-form__title_delete.css);
 @import url(./bloks/pop-up-form/__field/pop-up-form__field.css);
 @import url(./bloks/pop-up-form/__button-submit/pop-up-form__button-submit.css);

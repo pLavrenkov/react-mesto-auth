@@ -12,7 +12,7 @@ function Header({ onClick, click }) {
   useEffect(() => {
     switch (currentPage.location.pathname) {
       case '/':
-        setPath('/sign-up');
+        setPath('/sign-in');
         setLinkTitle('Выйти');
         setEmail('beasty2006@yandex.ru');
         break;
