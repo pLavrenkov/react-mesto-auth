@@ -1,0 +1,22 @@
+.header__button-menu {
+    width: 24px;
+    height: 24px;
+    background-color: black;
+    border: none;
+    display: none;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.header__button-menu:hover {
+    opacity: 60%;
+    transition: .3s, ease-out;
+}
+
+@media screen and (max-width: 767px) {
+    .header__button-menu {
+        display: block;
+        opacity: 100%;
+        transition: .3s, ease-out;
+    }
+  }

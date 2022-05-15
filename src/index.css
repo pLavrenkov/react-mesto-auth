@@ -9,8 +9,14 @@
 
 /* секция header */
 @import url(./bloks/header/header.css);
+@import url(./bloks/header/_type_cardspage/header_type_cardpage.css);
+@import url(./bloks/header/__logo-place/header__logo-place.css);
 @import url(./bloks/header/__logo/header__logo.css);
+@import url(./bloks/header/__button-menu/header__button-menu.css);
+@import url(./bloks/header/__button-menu/_closed/header__button-menu_closed.css);
+@import url(./bloks/header/__button-menu/_opened/header__button-menu_opened.css);
 @import url(./bloks/header/__nav/header__nav.css);
+@import url(./bloks/header/__nav/_opened/header__nav_opened.css);
 @import url(./bloks/header/__link/header__link.css);
 
 /* секция profile */

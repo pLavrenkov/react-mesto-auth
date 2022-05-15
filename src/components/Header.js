@@ -7,8 +7,18 @@ function Header({ onClick, click }) {
   const [path, setPath] = useState('');
   const [linkTitle, setLinkTitle] = useState('');
   const [email, setEmail] = useState('');
+  const [isNavOpened, setIsNavOpened] = useState(false);
   const currentPage = useHistory();
-  
+
+  const handleNav = () => {
+    setIsNavOpened(!isNavOpened);
+  }
+
+  const headerClasslist = (currentPage.location.pathname === '/') ? "header header_type_cardpage" : "header";
+
+  const navClassList = isNavOpened ? "header__nav header__nav_opened" : "header__nav";
+  const buttonMenuClassList = isNavOpened ? "header__button-menu header__button-menu_opened" : "header__button-menu header__button-menu_closed";
+
   useEffect(() => {
     switch (currentPage.location.pathname) {
       case '/':
@@ -35,12 +45,15 @@ function Header({ onClick, click }) {
   }, [click])
 
   return (
-    <header className="header">
-      <img className="header__logo" src={logoPath} alt="Логотип" />
-      <p className="header__nav">
-          {email}
-          <Link to={path} className="header__link" onClick={onClick} >{linkTitle}</Link>
-        </p>
+    <header className={headerClasslist}>
+      <div className="header__logo-place">
+        <img className="header__logo" src={logoPath} alt="Логотип" />
+        <button type="button" className={buttonMenuClassList} onClick={handleNav} ></button>
+      </div>
+      <p className={navClassList}>
+        {email}
+        <Link to={path} className="header__link" onClick={onClick} >{linkTitle}</Link>
+      </p>
     </header>
   )
 }

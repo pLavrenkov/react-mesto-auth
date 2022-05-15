@@ -1,0 +1,13 @@
+.header__logo-place {
+    width: calc(100% - 60Px);
+    display: flex;
+    padding: 0 30px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+@media screen and (max-width: 767px) {
+    .header__logo-place {
+        min-height: 83px;
+    }
+  }

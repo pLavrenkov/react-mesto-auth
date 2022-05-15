@@ -1,0 +1,7 @@
+@media screen and (max-width: 767px) {
+    .header_type_cardpage {
+      width: 100%;
+      min-height: 56px;
+      flex-direction: column-reverse;
+    }
+  }
