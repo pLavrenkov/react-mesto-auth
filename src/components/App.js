@@ -16,6 +16,7 @@ import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import InfoTooltip from './InfoTooltip';
 import { api } from '../utils/Api';
+import * as auth from '../utils/Auth';
 
 
 function App() {
@@ -145,6 +146,14 @@ function App() {
       })
   }
 
+  const handleRegister = (login, password) => {
+    auth.register(login, password);
+  }
+
+  const handleLogin = (login, password) => {
+    auth.login(login, password);
+  }
+
   function closeAll() {
     setIsAddPlacePopupOpen(false);
     setIsEditAvatarPopupOpen(false);
@@ -196,10 +205,10 @@ function App() {
               onCardDelete={handleDeleteCardClick}
             />
             <Route path={'/sign-up'}>
-              <Register onClick={handleLinkClick} />
+              <Register onClick={handleLinkClick} onRegister={handleRegister} />
             </Route>
             <Route path={'/sign-in'}>
-              <Login />
+              <Login onLogin={handleLogin} />
             </Route>
             <Route path={'*'}>
               {loggedIn ? <Redirect to={'/'} /> : <Redirect to={'/sign-in'} />}

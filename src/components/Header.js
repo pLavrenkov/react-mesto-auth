@@ -48,7 +48,7 @@ function Header({ onClick, click }) {
     <header className={headerClasslist}>
       <div className="header__logo-place">
         <img className="header__logo" src={logoPath} alt="Логотип" />
-        <button type="button" className={buttonMenuClassList} onClick={handleNav} ></button>
+        {(currentPage.location.pathname === '/') && <button type="button" className={buttonMenuClassList} onClick={handleNav} ></button>}
       </div>
       <p className={navClassList}>
         {email}
