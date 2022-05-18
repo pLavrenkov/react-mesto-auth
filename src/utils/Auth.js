@@ -12,10 +12,6 @@ export const register = (login, password) => {
             'email': login
         }),
     })
-        .then(checkResponse)
-        .catch((err) => {
-            alert(`Не удалось зарегистрироваться. Ошибка ${err}`)
-        })
 }
 
 export const login = (login, password) => {
@@ -29,6 +25,21 @@ export const login = (login, password) => {
             'password': password,
             'email': login
         }),
+    })
+        .then(checkResponse)
+        .catch((err) => {
+            alert(`Не удалось войти. Ошибка ${err}`)
+        })
+}
+
+export const checkToken = (token) => {
+    return fetch(`${baseApiUrl}/users/me`, {
+        method: 'GET',
+        headers: {
+            'Accept': "application/json",
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${token}`
+        },
     })
         .then(checkResponse)
         .catch((err) => {

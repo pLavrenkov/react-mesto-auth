@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import logoPath from '../images/logo.svg';
 
-function Header({ onClick, click }) {
+function Header({ onClick, click, loggedIn, onLoggedOut, userEmail }) {
   const [path, setPath] = useState('');
   const [linkTitle, setLinkTitle] = useState('');
   const [email, setEmail] = useState('');
@@ -14,9 +14,18 @@ function Header({ onClick, click }) {
     setIsNavOpened(!isNavOpened);
   }
 
-  const headerClasslist = (currentPage.location.pathname === '/') ? "header header_type_cardpage" : "header";
+  const handleLinkClik = () => {
+    if (currentPage.location.pathname = '/') {
+      onLoggedOut();
+      setIsNavOpened(false);
+      onClick();
+    } else {
+      onClick();
+    }
+  }
 
-  const navClassList = isNavOpened ? "header__nav header__nav_opened" : "header__nav";
+  const headerClasslist = (currentPage.location.pathname === '/') ? "header header_type_cardpage" : "header";
+  const navClassList = (currentPage.location.pathname === '/') ? (isNavOpened ? "header__nav header__nav_cardpage header__nav_cardpage_opened" : "header__nav header__nav_cardpage") : "header__nav";
   const buttonMenuClassList = isNavOpened ? "header__button-menu header__button-menu_opened" : "header__button-menu header__button-menu_closed";
 
   useEffect(() => {
@@ -24,7 +33,7 @@ function Header({ onClick, click }) {
       case '/':
         setPath('/sign-in');
         setLinkTitle('Выйти');
-        setEmail('beasty2006@yandex.ru');
+        setEmail(userEmail);
         break;
       case '/sign-up':
         setPath('/sign-in');
@@ -42,7 +51,7 @@ function Header({ onClick, click }) {
         setEmail('');
         break;
     }
-  }, [click])
+  }, [click, loggedIn])
 
   return (
     <header className={headerClasslist}>
@@ -52,7 +61,7 @@ function Header({ onClick, click }) {
       </div>
       <p className={navClassList}>
         {email}
-        <Link to={path} className="header__link" onClick={onClick} >{linkTitle}</Link>
+        <Link to={path} className="header__link" onClick={handleLinkClik} >{linkTitle}</Link>
       </p>
     </header>
   )

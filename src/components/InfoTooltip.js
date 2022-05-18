@@ -1,20 +1,20 @@
 import React from "react";
 import { useState, useEffect } from "react";
 
-function InfoTooltip( {isOpen, loggedIn, onClose, onCloseByLayout} ) {
+function InfoTooltip( {isOpen, isRegistred, onClose, onCloseByLayout} ) {
     const [subtitle, setSubtitle] = useState('');
     const [loggedInClass, setLoggedInClass] = useState('');
     const handleClassPopupOpen = (isOpen ? "pop-up pop-up_opened" : "pop-up");
   
     useEffect(() => {
-        if (loggedIn) {
+        if (isRegistred) {
             setSubtitle('Вы успешно зарегистрировались!');
             setLoggedInClass("pop-up-form__image pop-up-form__image_type_logedin");
         } else {
             setSubtitle('Что-то пошло не так! Попробуйте еще раз.');
             setLoggedInClass("pop-up-form__image pop-up-form__image_type_rejected");
         }
-    }, [])
+    }, [handleClassPopupOpen])
 
 
     return (

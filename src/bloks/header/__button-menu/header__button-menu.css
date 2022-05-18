@@ -16,6 +16,7 @@
 @media screen and (max-width: 767px) {
     .header__button-menu {
         display: block;
+        align-self: center;
         opacity: 100%;
         transition: .3s, ease-out;
     }

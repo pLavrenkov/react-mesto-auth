@@ -3,18 +3,19 @@ import { useState } from "react";
 
 function Login({ onLogin }) {
     const [state, setState] = useState({ login: '', password: '' });
-    
+
     const handleChange = (e) => {
         setState((prev) => ({
             ...prev,
             [e.target.name]: e.target.value,
         }))
-        console.log(state);
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        onLogin(state.login, state.password)
+        if (onLogin && state.login && state.password) {
+            onLogin(state.login, state.password)
+        }
     }
 
     return (

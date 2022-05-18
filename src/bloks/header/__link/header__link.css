@@ -11,3 +11,9 @@
     opacity: 100%;
     transition: .3s ease-out;
 }
+
+@media screen and (max-width: 767px) {
+    .header__link {
+        margin-left: 0;
+    }
+  }

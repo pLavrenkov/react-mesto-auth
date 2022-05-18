@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from "react";
 import { CurrentUserContext, defaultUser } from '../contexts/CurrentUserContext';
-import { Route, Redirect, Switch, useHistory, Link } from 'react-router-dom';
+import { Route, Redirect, Switch, useHistory } from 'react-router-dom';
 
 import Header from "./Header";
 import Main from "./Main";
@@ -26,11 +26,13 @@ function App() {
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
   const [isImagePopupOpen, setIsImagePopupOpen] = useState(false);
   const [isDeleteCardPopupOpen, setIsDeleteCardPopupOpen] = useState(false);
-  const [isInfoTooltipOpen, setIsInfoTooltopOpen] = useState(true);
+  const [isInfoTooltipOpen, setIsInfoTooltopOpen] = useState(false);
+  const [registerOk, setRegisterOk] = useState(false);
   const [selectedCard, setSelectedCard] = useState({});
   const [click, setClick] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(true);
-  const pageObj = useHistory();
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({})
+  const history = useHistory();
 
   useEffect(() => {
     api.getUserInfo()
@@ -59,10 +61,6 @@ function App() {
     setSelectedCard(item);
   }
 
-  function handleInfoTooltipOpen() {
-    setIsInfoTooltopOpen(true);
-  }
-
   function handleCardClick(name, link) {
     const card = {
       name: name,
@@ -74,6 +72,11 @@ function App() {
 
   const handleLinkClick = () => {
     setClick(!click);
+  }
+
+  const handleLoggedOut = () => {
+    setLoggedIn(false);
+    localStorage.removeItem('token');
   }
 
   function handleUpdateUser(name, about) {
@@ -147,12 +150,57 @@ function App() {
   }
 
   const handleRegister = (login, password) => {
-    auth.register(login, password);
+    auth.register(login, password)
+      .then(res => {
+        if (res.ok) {
+          setRegisterOk(true);
+          setIsInfoTooltopOpen(true);
+          handleLinkClick();
+          history.push('/sign-in');
+          return res.json();
+        } else {
+          setRegisterOk(false);
+          setIsInfoTooltopOpen(true);
+          return Promise.reject(`Ошибка: ${res.status}`);
+
+        }
+      })
   }
 
   const handleLogin = (login, password) => {
-    auth.login(login, password);
+    auth.login(login, password)
+      .then((res) => {
+        if (res) {
+          localStorage.setItem('token', res.token);
+          setUserData({
+            email: login,
+            id: ''
+          })
+          setLoggedIn(true);
+          history.push('/');
+        }
+
+      })
   }
+
+  const checkToken = () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      auth.checkToken(token)
+        .then(res => {
+          setUserData({
+            id: res.data._id,
+            email: res.data.email
+          })
+          setLoggedIn(true);
+          history.push('/')
+        })
+    }
+  }
+
+  useEffect(() => {
+    checkToken();
+  }, [])
 
   function closeAll() {
     setIsAddPlacePopupOpen(false);
@@ -188,7 +236,7 @@ function App() {
     <div className="body">
       <div className="mainpage">
         <CurrentUserContext.Provider value={currentUser}>
-          <Header onClick={handleLinkClick} click={click} />
+          <Header onClick={handleLinkClick} click={click} loggedIn={loggedIn} onLoggedOut={handleLoggedOut} userEmail={userData.email} />
           <Switch>
             <ProtectedRoute
               exact path={'/'}
@@ -220,7 +268,7 @@ function App() {
           <AddPlacePopup isOpen={isAddPlacePopupOpen} onClose={closeAllPopups} newCardAdd={handleAddPlaceSubmit} onCloseByLayout={closeAllPopupsByLayout} />
           <PopupWithForm name={"deletecard"} title={"Вы уверены?"} button={"Да"} isOpen={isDeleteCardPopupOpen} onClose={closeAllPopups} onCloseByLayout={closeAllPopupsByLayout} onSubmit={handleCardDelete} />
           <ImagePopup onClose={closeAllPopups} cardAttributes={selectedCard} isOpen={isImagePopupOpen} onCloseByLayout={closeAllPopupsByLayout} />
-          <InfoTooltip isOpen={isInfoTooltipOpen} loggedIn={loggedIn} onClose={closeAllPopups} onCloseByLayout={closeAllPopupsByLayout} />
+          <InfoTooltip isOpen={isInfoTooltipOpen} isRegistred={registerOk} onClose={closeAllPopups} onCloseByLayout={closeAllPopupsByLayout} />
         </CurrentUserContext.Provider>
 
       </div>
