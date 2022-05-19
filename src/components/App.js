@@ -35,14 +35,16 @@ function App() {
   const history = useHistory();
 
   useEffect(() => {
-    api.getUserInfo()
-      .then((userInfo) => {
-        setCurrentUser(userInfo);
-      })
-      .catch((err) => {
-        alert(`Возникла ошибка при загрузке данных пользователя ${err}`);
-      })
-  }, [])
+    if (loggedIn) {
+      api.getUserInfo()
+        .then((userInfo) => {
+          setCurrentUser(userInfo);
+        })
+        .catch((err) => {
+          alert(`Возникла ошибка при загрузке данных пользователя ${err}`);
+        })
+    }
+  }, [loggedIn])
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -104,14 +106,16 @@ function App() {
   const [cards, setCards] = React.useState([]);
 
   useEffect(() => {
-    api.getCards()
-      .then((arrCards) => {
-        setCards(arrCards)
-      })
-      .catch((err) => {
-        alert(`Карточки не загрузились. Ошибка ${err}`)
-      })
-  }, [])
+    if (loggedIn) {
+      api.getCards()
+        .then((arrCards) => {
+          setCards(arrCards)
+        })
+        .catch((err) => {
+          alert(`Карточки не загрузились. Ошибка ${err}`)
+        })
+    }
+  }, [loggedIn])
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(like => like._id === currentUser._id);
@@ -162,13 +166,24 @@ function App() {
           setRegisterOk(false);
           setIsInfoTooltopOpen(true);
           return Promise.reject(`Ошибка: ${res.status}`);
-
         }
+      })
+      .catch((err) => {
+        console.log(`Не удалось зарегистрироваться. ${err}`)
       })
   }
 
   const handleLogin = (login, password) => {
     auth.login(login, password)
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          setRegisterOk(false);
+          setIsInfoTooltopOpen(true);
+          return Promise.reject(`Ошибка: ${res.status}`);
+        }
+      })
       .then((res) => {
         if (res) {
           localStorage.setItem('token', res.token);
@@ -179,7 +194,9 @@ function App() {
           setLoggedIn(true);
           history.push('/');
         }
-
+      })
+      .catch((err) => {
+        console.log(`Не удалось войти. ${err}`)
       })
   }
 
@@ -194,6 +211,9 @@ function App() {
           })
           setLoggedIn(true);
           history.push('/')
+        })
+        .catch((err) => {
+          console.log(`Не удалось проверить токен. ${err}`)
         })
     }
   }
@@ -236,7 +256,7 @@ function App() {
     <div className="body">
       <div className="mainpage">
         <CurrentUserContext.Provider value={currentUser}>
-          <Header onClick={handleLinkClick} click={click} loggedIn={loggedIn} onLoggedOut={handleLoggedOut} userEmail={userData.email} />
+          <Header onClick={handleLinkClick} loggedIn={loggedIn} onLoggedOut={handleLoggedOut} userEmail={userData.email} />
           <Switch>
             <ProtectedRoute
               exact path={'/'}
