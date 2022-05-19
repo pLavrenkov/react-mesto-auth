@@ -162,13 +162,24 @@ function App() {
           setRegisterOk(false);
           setIsInfoTooltopOpen(true);
           return Promise.reject(`Ошибка: ${res.status}`);
-
         }
+      })
+      .catch((err) => {
+        console.log(`Не удалось зарегистрироваться. ${err}`)
       })
   }
 
   const handleLogin = (login, password) => {
     auth.login(login, password)
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        } else {
+          setRegisterOk(false);
+          setIsInfoTooltopOpen(true);
+          return Promise.reject(`Ошибка: ${res.status}`);
+        }
+      })
       .then((res) => {
         if (res) {
           localStorage.setItem('token', res.token);
@@ -179,7 +190,9 @@ function App() {
           setLoggedIn(true);
           history.push('/');
         }
-
+      })
+      .catch((err) => {
+        console.log(`Не удалось войти. ${err}`)
       })
   }
 
@@ -194,6 +207,9 @@ function App() {
           })
           setLoggedIn(true);
           history.push('/')
+        })
+        .catch((err) => {
+          console.log(`Не удалось проверить токен. ${err}`)
         })
     }
   }
@@ -236,7 +252,7 @@ function App() {
     <div className="body">
       <div className="mainpage">
         <CurrentUserContext.Provider value={currentUser}>
-          <Header onClick={handleLinkClick} click={click} loggedIn={loggedIn} onLoggedOut={handleLoggedOut} userEmail={userData.email} />
+          <Header onClick={handleLinkClick} loggedIn={loggedIn} onLoggedOut={handleLoggedOut} userEmail={userData.email} />
           <Switch>
             <ProtectedRoute
               exact path={'/'}
