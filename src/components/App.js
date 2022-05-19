@@ -35,14 +35,16 @@ function App() {
   const history = useHistory();
 
   useEffect(() => {
-    api.getUserInfo()
-      .then((userInfo) => {
-        setCurrentUser(userInfo);
-      })
-      .catch((err) => {
-        alert(`Возникла ошибка при загрузке данных пользователя ${err}`);
-      })
-  }, [])
+    if (loggedIn) {
+      api.getUserInfo()
+        .then((userInfo) => {
+          setCurrentUser(userInfo);
+        })
+        .catch((err) => {
+          alert(`Возникла ошибка при загрузке данных пользователя ${err}`);
+        })
+    }
+  }, [loggedIn])
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(true);
@@ -104,14 +106,16 @@ function App() {
   const [cards, setCards] = React.useState([]);
 
   useEffect(() => {
-    api.getCards()
-      .then((arrCards) => {
-        setCards(arrCards)
-      })
-      .catch((err) => {
-        alert(`Карточки не загрузились. Ошибка ${err}`)
-      })
-  }, [])
+    if (loggedIn) {
+      api.getCards()
+        .then((arrCards) => {
+          setCards(arrCards)
+        })
+        .catch((err) => {
+          alert(`Карточки не загрузились. Ошибка ${err}`)
+        })
+    }
+  }, [loggedIn])
 
   function handleCardLike(card) {
     const isLiked = card.likes.some(like => like._id === currentUser._id);
