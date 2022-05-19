@@ -26,9 +26,8 @@ export const login = (login, password) => {
             'email': login
         }),
     })
-        .then(checkResponse)
         .catch((err) => {
-            alert(`Не удалось войти. Ошибка ${err}`)
+            console.log(`Не удалось войти. Ошибка ${err}`)
         })
 }
 
