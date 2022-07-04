@@ -108,8 +108,8 @@ export class Api {
 
 export const api = new Api(
   {
-    baseUrlMesto: 'https://mesto.nomoreparties.co/v1/cohort-38',
-    baseUrlUser: 'https://nomoreparties.co/v1/cohort-38'
+    baseUrlMesto: 'api.mesto.plavrenkov.nomoredomains.sbs',
+    baseUrlUser: 'api.mesto.plavrenkov.nomoredomains.sbs'
   },
   {
     authorization: '4668ff3a-c5ce-444d-bb20-dac560596bbe',

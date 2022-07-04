@@ -1,4 +1,4 @@
-const baseApiUrl = "https://auth.nomoreparties.co";
+const baseApiUrl = "http://api.mesto.plavrenkov.nomoredomains.sbs";
 
 export const register = (login, password) => {
     return fetch(`${baseApiUrl}/signup`, {

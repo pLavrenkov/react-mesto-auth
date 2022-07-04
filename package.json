@@ -1,7 +1,7 @@
 {
   "name": "mesto-react",
   "version": "0.1.0",
-  "homepage": "https://plavrenkov.github.io/react-mesto-auth/",
+  "homepage": "./",
   "private": true,
   "dependencies": {
     "@hookform/error-message": "^2.0.0",
@@ -21,7 +21,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "deployserver": "npm run build && scp -r ./build/* plavrenkov@158.160.0.206:/home/plavrenkov/react-mesto-api-full/frontend"
   },
   "eslintConfig": {
     "extends": [
