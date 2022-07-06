@@ -109,7 +109,15 @@ function App() {
     if (loggedIn) {
       api.getCards()
         .then((arrCards) => {
-          setCards(arrCards)
+          setCards(arrCards.data.sort(function(a, b) {
+            if (a.createdAt > b.createdAt) {
+              return -1;
+            } else if (a.createdAt < b.createdAt) {
+              return 1;
+            } else {
+              return 0;
+            }
+          }))
         })
         .catch((err) => {
           alert(`Карточки не загрузились. Ошибка ${err}`)
@@ -118,7 +126,7 @@ function App() {
   }, [loggedIn])
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some(like => like._id === currentUser._id);
+    const isLiked = card.likes.some(like => like === currentUser._id);
     api.changeLikeCardStatus(card._id, isLiked)
       .then((newCard) => {
         setCards((state) =>
@@ -134,7 +142,6 @@ function App() {
     evt.preventDefault();
     api.deleteCard(selectedCard._id)
       .then((newCard) => {
-        console.log(newCard);
         setCards((state) => state.filter((c) => c._id !== selectedCard._id ? true : false));
       })
       .catch((err) => {
@@ -146,7 +153,7 @@ function App() {
   function handleAddPlaceSubmit(name, link) {
     api.putNewCard(name, link)
       .then((newCard) => {
-        setCards([newCard, ...cards]);
+        setCards([newCard.data, ...cards]);
       })
       .catch((err) => {
         alert(`Не удалось загрузить катрочку. Ошибка ${err}`)
@@ -205,7 +212,6 @@ function App() {
     if (token) {
       auth.checkToken(token)
         .then(res => {
-          console.log(res._id);
           setUserData({
             id: res._id,
             email: res.email

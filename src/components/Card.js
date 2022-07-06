@@ -5,10 +5,10 @@ import { useContext } from "react";
 function Card({ card, link, name, likesArr, onCardClick, onCardLike, onCardDelete }) {
     const currentUser = useContext(CurrentUserContext);
 
-    const isOwnCard = (card.owner._id === currentUser._id);
+    const isOwnCard = (card.owner === currentUser._id);
     const cardDeleteButtonClass = (isOwnCard ? "element__bin-button" : "element__bin-button element__bin-button_display_none");
 
-    const isLiked = (likesArr.some(like => like._id === currentUser._id));
+    const isLiked = (likesArr.some(like => like === currentUser._id));
     const cardLikeButtonClassName = (isLiked ? "element__like element__like_active" : "element__like");
 
     function handleClick() {
