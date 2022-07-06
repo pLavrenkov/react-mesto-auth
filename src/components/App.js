@@ -205,10 +205,11 @@ function App() {
     if (token) {
       auth.checkToken(token)
         .then(res => {
+          console.log(res._id);
           setUserData({
-            id: res.data._id,
-            email: res.data.email
-          })
+            id: res._id,
+            email: res.email
+          });
           setLoggedIn(true);
           history.push('/')
         })

@@ -15,6 +15,7 @@ export class Api {
   getCards() {
     return fetch(`${this._baseUrlMesto}/cards`, {
       headers: this._headers,
+      credentials: 'include',
     }
     )
     .then(this._checkResponse)
@@ -23,6 +24,7 @@ export class Api {
   getUserInfo() {
     return fetch(`${this._baseUrlUser}/users/me`, {
       headers: this._headers,
+      credentials: 'include',
     }
     )
     .then(this._checkResponse)
@@ -35,7 +37,8 @@ export class Api {
       body: JSON.stringify({
         name: name,
         about: about
-      })
+      }),
+      credentials: 'include',
     })
     .then(this._checkResponse)
   }
@@ -46,7 +49,8 @@ export class Api {
       headers: this._headers,
       body: JSON.stringify({
         avatar: url
-      })
+      }),
+      credentials: 'include',
     })
     .then(this._checkResponse)
   }
@@ -58,7 +62,8 @@ export class Api {
       body: JSON.stringify({
         name: name,
         link: link
-      })
+      }),
+      credentials: 'include',
     })
     .then(this._checkResponse)
   }
@@ -67,6 +72,7 @@ export class Api {
     return fetch(`${this._baseUrlMesto}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers,
+      credentials: 'include',
     })
     .then(this._checkResponse)
   }
@@ -75,6 +81,7 @@ export class Api {
     return fetch(`${this._baseUrlMesto}/cards`, {
       method: 'GET',
       headers: this._headers,
+      credentials: 'include',
     })
     .then(this._checkResponse)
   }
@@ -83,6 +90,7 @@ export class Api {
     return fetch(`${this._baseUrlMesto}/cards/${cardId}/likes`, {
       method: 'PUT',
       headers: this._headers,
+      credentials: 'include',
     })
     .then(this._checkResponse)
   }
@@ -91,6 +99,7 @@ export class Api {
     return fetch(`${this._baseUrlMesto}/cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: this._headers,
+      credentials: 'include',
     })
     .then(this._checkResponse)
   }
@@ -108,8 +117,8 @@ export class Api {
 
 export const api = new Api(
   {
-    baseUrlMesto: 'api.mesto.plavrenkov.nomoredomains.sbs',
-    baseUrlUser: 'api.mesto.plavrenkov.nomoredomains.sbs'
+    baseUrlMesto: 'http://api.mesto.plavrenkov.nomoredomains.sbs',
+    baseUrlUser: 'http://api.mesto.plavrenkov.nomoredomains.sbs'
   },
   {
     authorization: '4668ff3a-c5ce-444d-bb20-dac560596bbe',

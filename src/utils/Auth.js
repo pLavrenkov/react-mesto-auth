@@ -11,6 +11,7 @@ export const register = (login, password) => {
             'password': password,
             'email': login
         }),
+        credentials: 'include',
     })
 }
 
@@ -25,6 +26,7 @@ export const login = (login, password) => {
             'password': password,
             'email': login
         }),
+        credentials: 'include',
     })
         .catch((err) => {
             console.log(`Не удалось войти. Ошибка ${err}`)
@@ -37,8 +39,9 @@ export const checkToken = (token) => {
         headers: {
             'Accept': "application/json",
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`
+            "Authorization": `Bearer ${token}`,
         },
+        credentials: 'include',
     })
         .then(checkResponse)
         .catch((err) => {
