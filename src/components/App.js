@@ -193,7 +193,6 @@ function App() {
       })
       .then((res) => {
         if (res) {
-          console.log(res.token);
           localStorage.setItem('token', res.token);
           setUserData({
             email: login,
