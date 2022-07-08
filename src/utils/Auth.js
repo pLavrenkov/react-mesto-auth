@@ -1,4 +1,4 @@
-const baseApiUrl = "http://api.mesto.plavrenkov.nomoredomains.sbs";
+const baseApiUrl = "https://api.mesto.plavrenkov.nomoredomains.sbs";
 
 export const register = (login, password) => {
     return fetch(`${baseApiUrl}/signup`, {
@@ -34,6 +34,7 @@ export const login = (login, password) => {
 }
 
 export const checkToken = (token) => {
+    console.log(token);
     return fetch(`${baseApiUrl}/users/me`, {
         method: 'GET',
         headers: {

@@ -1,5 +1,6 @@
 export class Api {
   constructor(baseUrl, headers) {
+    this._baseUrl = baseUrl;
     this._baseUrlMesto = baseUrl.baseUrlMesto;
     this._baseUrlUser = baseUrl.baseUrlUser;
     this._headers = headers;
@@ -13,7 +14,7 @@ export class Api {
   }
 
   getCards() {
-    return fetch(`${this._baseUrlMesto}/cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
       headers: this._headers,
       credentials: 'include',
     }
@@ -22,7 +23,7 @@ export class Api {
   }
 
   getUserInfo() {
-    return fetch(`${this._baseUrlUser}/users/me`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       headers: this._headers,
       credentials: 'include',
     }
@@ -31,7 +32,7 @@ export class Api {
   }
 
   patchUserInfo(name, about) {
-    return fetch(`${this._baseUrlUser}/users/me`, {
+    return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
@@ -44,7 +45,7 @@ export class Api {
   }
 
   patchAvatar(url) {
-    return fetch(`${this._baseUrlMesto}/users/me/avatar`, {
+    return fetch(`${this._baseUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({
@@ -56,7 +57,7 @@ export class Api {
   }
 
   putNewCard(name, link) {
-    return fetch(`${this._baseUrlMesto}/cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
       body: JSON.stringify({
@@ -69,7 +70,7 @@ export class Api {
   }
 
   deleteCard(cardId) {
-    return fetch(`${this._baseUrlMesto}/cards/${cardId}`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers,
       credentials: 'include',
@@ -78,7 +79,7 @@ export class Api {
   }
 
   getLike() {
-    return fetch(`${this._baseUrlMesto}/cards`, {
+    return fetch(`${this._baseUrl}/cards`, {
       method: 'GET',
       headers: this._headers,
       credentials: 'include',
@@ -87,7 +88,7 @@ export class Api {
   }
 
   putLike(cardId) {
-    return fetch(`${this._baseUrlMesto}/cards/${cardId}/likes`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'PUT',
       headers: this._headers,
       credentials: 'include',
@@ -96,7 +97,7 @@ export class Api {
   }
 
   deleteLike(cardId) {
-    return fetch(`${this._baseUrlMesto}/cards/${cardId}/likes`, {
+    return fetch(`${this._baseUrl}/cards/${cardId}/likes`, {
       method: 'DELETE',
       headers: this._headers,
       credentials: 'include',
@@ -116,10 +117,7 @@ export class Api {
 
 
 export const api = new Api(
-  {
-    baseUrlMesto: 'http://api.mesto.plavrenkov.nomoredomains.sbs',
-    baseUrlUser: 'http://api.mesto.plavrenkov.nomoredomains.sbs'
-  },
+  'https://api.mesto.plavrenkov.nomoredomains.sbs',
   {
     authorization: '4668ff3a-c5ce-444d-bb20-dac560596bbe',
     'Content-Type': 'application/json',

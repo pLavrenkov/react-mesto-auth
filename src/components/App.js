@@ -193,6 +193,7 @@ function App() {
       })
       .then((res) => {
         if (res) {
+          console.log(res.token);
           localStorage.setItem('token', res.token);
           setUserData({
             email: login,
@@ -209,9 +210,11 @@ function App() {
 
   const checkToken = () => {
     const token = localStorage.getItem('token');
+    console.log(token);
     if (token) {
       auth.checkToken(token)
         .then(res => {
+          console.log(res._id);
           setUserData({
             id: res._id,
             email: res.email
