@@ -109,7 +109,7 @@ function App() {
     if (loggedIn) {
       api.getCards()
         .then((arrCards) => {
-          setCards(arrCards.data.sort(function(a, b) {
+          setCards(arrCards.data.sort(function (a, b) {
             if (a.createdAt > b.createdAt) {
               return -1;
             } else if (a.createdAt < b.createdAt) {
@@ -210,11 +210,9 @@ function App() {
 
   const checkToken = () => {
     const token = localStorage.getItem('token');
-    console.log(token);
     if (token) {
       auth.checkToken(token)
         .then(res => {
-          console.log(res._id);
           setUserData({
             id: res._id,
             email: res.email

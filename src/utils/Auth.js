@@ -34,7 +34,6 @@ export const login = (login, password) => {
 }
 
 export const checkToken = (token) => {
-    console.log(token);
     return fetch(`${baseApiUrl}/users/me`, {
         method: 'GET',
         headers: {
